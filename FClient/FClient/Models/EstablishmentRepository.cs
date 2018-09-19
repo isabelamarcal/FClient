@@ -37,7 +37,7 @@ namespace FClient.Models
         ///</summary>
         public override List<Establishment> GetAll()
         {
-            string sql = "Select Id, Nome, Email, Cidade, Endereco FROM Pessoa ORDER BY Nome";
+            string sql = "Select Id, SocialName, FantasyName, CNPJ, Email, Address, City, State, Phone, DateTime, Category, IsActive, Agency, Account     FROM Establishment ORDER BY Nome";
             using (var conn = new SqlConnection(StringConnection))
             {
                 var cmd = new SqlCommand(sql, conn);
@@ -62,7 +62,7 @@ namespace FClient.Models
                             p.Phone = reader["Phone"].ToString();
                             p.DateTime = DateTime.Parse(reader["DateTime"].ToString());
                             p.Category = reader["Category"].ToString();
-                            p.IsActive = Convert.ToBoolean(reader["Endereco"]);
+                            p.IsActive = Convert.ToBoolean(reader["IsActive"]);
                             p.Agency = reader["Agency"].ToString();
                             p.Account = reader["Account"].ToString();
 
@@ -87,7 +87,7 @@ namespace FClient.Models
         {
             using (var conn = new SqlConnection(StringConnection))
             {
-                string sql = "Select Id, Nome, Email, Cidade, Endereco FROM Pessoa WHERE Id=@Id";
+                string sql = "Select Id, SocialName, FantasyName, CNPJ, Email, Address, City, State, Phone, DateTime, Category, IsActive, Agency, Account FROM Establishment WHERE Id=@Id";
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@Id", id);
                 Establishment p = null;
@@ -100,12 +100,21 @@ namespace FClient.Models
                         {
                             if (reader.Read())
                             {
-                                p = new Pessoa();
-                                p.Id = (int)reader["Id"];
-                                p.Nome = reader["Nome"].ToString();
+                                p = new Establishment();
+                                p.Id = new Guid(reader["Id"].ToString());
+                                p.SocialName = reader["SocialName"].ToString();
+                                p.FantasyName = reader["FantasyName"].ToString();
+                                p.CNPJ = reader["CNPJ"].ToString();
                                 p.Email = reader["Email"].ToString();
-                                p.Cidade = reader["Cidade"].ToString();
-                                p.Endereco = reader["Endereco"].ToString();
+                                p.Address = reader["Address"].ToString();
+                                p.City = reader["City"].ToString();
+                                p.State = reader["State"].ToString();
+                                p.Phone = reader["Phone"].ToString();
+                                p.DateTime = DateTime.Parse(reader["DateTime"].ToString());
+                                p.Category = reader["Category"].ToString();
+                                p.IsActive = Convert.ToBoolean(reader["IsActive"]);
+                                p.Agency = reader["Agency"].ToString();
+                                p.Account = reader["Account"].ToString();
                             }
                         }
                     }
@@ -121,16 +130,26 @@ namespace FClient.Models
         ///<summary>Salva a pessoa no banco
         ///<param name="entity">Referência de Pessoa que será salva.</param>
         ///</summary>
-        public override void Save(Pessoa entity)
+        public override void Save(Establishment entity)
         {
             using (var conn = new SqlConnection(StringConnection))
             {
-                string sql = "INSERT INTO Pessoa (Nome, Email, Cidade, Endereco) VALUES (@Nome, @Email, @Cidade, @Endereco)";
+                string sql = "INSERT INTO Establishment ( SocialName, FantasyName, CNPJ, Email, Address, City, State, Phone, DateTime, Category, IsActive, Agency, Account) VALUES (@SocialName, @FantasyName, @CNPJ, @Email, @Address, @City, @State, @Phone, @DateTime, @Category, @IsActive, @Agency, @Account)";
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@Nome", entity.Nome);
+                cmd.Parameters.AddWithValue("@SocialName", entity.SocialName);
+                cmd.Parameters.AddWithValue("@FantasyName", entity.FantasyName);
+                cmd.Parameters.AddWithValue("@CNPJ", entity.CNPJ);
                 cmd.Parameters.AddWithValue("@Email", entity.Email);
-                cmd.Parameters.AddWithValue("@Cidade", entity.Cidade);
-                cmd.Parameters.AddWithValue("@Endereco", entity.Endereco);
+                cmd.Parameters.AddWithValue("@Address", entity.Address);
+                cmd.Parameters.AddWithValue("@City", entity.City);
+                cmd.Parameters.AddWithValue("@State", entity.State);
+                cmd.Parameters.AddWithValue("@Phone", entity.Phone);
+                cmd.Parameters.AddWithValue("@DateTime", entity.DateTime);
+                cmd.Parameters.AddWithValue("@Category", entity.Category);
+                cmd.Parameters.AddWithValue("@IsActive", entity.IsActive);
+                cmd.Parameters.AddWithValue("@Agency", entity.Agency);
+                cmd.Parameters.AddWithValue("@Account", entity.Account);
+
                 try
                 {
                     conn.Open();
@@ -146,17 +165,25 @@ namespace FClient.Models
         ///<summary>Atualiza a pessoa no banco
         ///<param name="entity">Referência de Pessoa que será atualizada.</param>
         ///</summary>
-        public override void Update(Pessoa entity)
+        public override void Update(Establishment entity)
         {
             using (var conn = new SqlConnection(StringConnection))
             {
-                string sql = "UPDATE Pessoa SET Nome=@Nome, Email=@Email, Cidade=@Cidade, Endereco=@Endereco Where Id=@Id";
+                string sql = "UPDATE Establishment SET SocialName=@SocialName, FantasyName=@FantasyName, CNPJ=@CNPJ, Email=@Email, Address=@Address, City=@City, State=@State, Phone=@Phone, DateTime=@DateTime, Category=@Category, IsActive=@IsActive, Agency=@Agency, Account=@Account  Where Id=@Id";
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@Id", entity.Id);
-                cmd.Parameters.AddWithValue("@Nome", entity.Nome);
+                cmd.Parameters.AddWithValue("@SocialName", entity.SocialName);
+                cmd.Parameters.AddWithValue("@FantasyName", entity.FantasyName);
+                cmd.Parameters.AddWithValue("@CNPJ", entity.CNPJ);
                 cmd.Parameters.AddWithValue("@Email", entity.Email);
-                cmd.Parameters.AddWithValue("@Cidade", entity.Cidade);
-                cmd.Parameters.AddWithValue("@Endereco", entity.Endereco);
+                cmd.Parameters.AddWithValue("@Address", entity.Address);
+                cmd.Parameters.AddWithValue("@City", entity.City);
+                cmd.Parameters.AddWithValue("@State", entity.State);
+                cmd.Parameters.AddWithValue("@Phone", entity.Phone);
+                cmd.Parameters.AddWithValue("@DateTime", entity.DateTime);
+                cmd.Parameters.AddWithValue("@Category", entity.Category);
+                cmd.Parameters.AddWithValue("@IsActive", entity.IsActive);
+                cmd.Parameters.AddWithValue("@Agency", entity.Agency);
+                cmd.Parameters.AddWithValue("@Account", entity.Account);
                 try
                 {
                     conn.Open();
