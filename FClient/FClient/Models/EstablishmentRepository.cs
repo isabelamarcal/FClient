@@ -14,6 +14,7 @@ namespace FClient.Models
         ///</summary>
         public override void Delete(Establishment entity)
         {
+            
             using (var conn = new SqlConnection(StringConnection))
             {
                 string sql = "DELETE Establishment Where Id=@Id";
@@ -32,12 +33,14 @@ namespace FClient.Models
         }
         
 
+
         ///<summary>Obtém todas as pessoas
         ///<returns>Retorna as pessoas cadastradas.</returns>
         ///</summary>
         public override List<Establishment> GetAll()
         {
-            string sql = "Select Id, SocialName, FantasyName, CNPJ, Email, Address, City, State, Phone, DateTime, Category, IsActive, Agency, Account     FROM Establishment ORDER BY Nome";
+            
+                string sql = "Select Id, SocialName, FantasyName, CNPJ, Email, Address, City, State, Phone, DateTime, Category, IsActive, Agency, Account     FROM Establishment ORDER BY Nome";
             using (var conn = new SqlConnection(StringConnection))
             {
                 var cmd = new SqlCommand(sql, conn);
