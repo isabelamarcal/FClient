@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -15,10 +16,10 @@ namespace FClient.Models
         public override void Delete(Establishment entity)
         {
             
-            using (var conn = new SqlConnection(StringConnection))
+            using (var conn = new MySqlConnection(StringConnection))
             {
-                string sql = "DELETE Establishment Where Id=@Id";
-                SqlCommand cmd = new SqlCommand(sql, conn);
+                string sql = "DELETE establishment Where Id=@Id";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@Id", entity.Id);
                 try
                 {
@@ -40,16 +41,16 @@ namespace FClient.Models
         public override List<Establishment> GetAll()
         {
             
-                string sql = "Select Id, SocialName, FantasyName, CNPJ, Email, Address, City, State, Phone, DateTime, Category, IsActive, Agency, Account     FROM Establishment ORDER BY Nome";
-            using (var conn = new SqlConnection(StringConnection))
+                string sql = "Select Id, SocialName, FantasyName, CNPJ, Email, Address, City, State, Phone, DateTime, Category, IsActive, Agency, Account     FROM establishment ORDER BY SocialName";
+            using (var conn = new MySqlConnection(StringConnection))
             {
-                var cmd = new SqlCommand(sql, conn);
+                var cmd = new MySqlCommand(sql, conn);
                 List<Establishment> list = new List<Establishment>();
                 Establishment p = null;
                 try
                 {
                     conn.Open();
-                    using (var reader = cmd.ExecuteReader(CommandBehavior.CloseConnection))
+                    using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
@@ -88,16 +89,16 @@ namespace FClient.Models
         ///</summary>
         public override Establishment GetById(int id)
         {
-            using (var conn = new SqlConnection(StringConnection))
+            using (var conn = new MySqlConnection(StringConnection))
             {
-                string sql = "Select Id, SocialName, FantasyName, CNPJ, Email, Address, City, State, Phone, DateTime, Category, IsActive, Agency, Account FROM Establishment WHERE Id=@Id";
-                SqlCommand cmd = new SqlCommand(sql, conn);
+                string sql = "Select Id, SocialName, FantasyName, CNPJ, Email, Address, City, State, Phone, DateTime, Category, IsActive, Agency, Account FROM establishment WHERE Id=@Id";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@Id", id);
                 Establishment p = null;
                 try
                 {
                     conn.Open();
-                    using (var reader = cmd.ExecuteReader(CommandBehavior.CloseConnection))
+                    using (var reader = cmd.ExecuteReader())
                     {
                         if (reader.HasRows)
                         {
@@ -135,11 +136,13 @@ namespace FClient.Models
         ///</summary>
         public override void Save(Establishment entity)
         {
-            using (var conn = new SqlConnection(StringConnection))
+            using (var conn = new MySqlConnection(StringConnection))
             {
-                string sql = "INSERT INTO Establishment ( SocialName, FantasyName, CNPJ, Email, Address, City, State, Phone, DateTime, Category, IsActive, Agency, Account) VALUES (@SocialName, @FantasyName, @CNPJ, @Email, @Address, @City, @State, @Phone, @DateTime, @Category, @IsActive, @Agency, @Account)";
-                SqlCommand cmd = new SqlCommand(sql, conn);
+                string sql = "INSERT INTO establishment ( Id, SocialName, FantasyName, CNPJ, Email, Address, City, State, Phone, DateTime, Category, IsActive, Agency, Account) VALUES (@Id, @SocialName, @FantasyName, @CNPJ, @Email, @Address, @City, @State, @Phone, @DateTime, @Category, @IsActive, @Agency, @Account)";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@Id",new Guid());
                 cmd.Parameters.AddWithValue("@SocialName", entity.SocialName);
+
                 cmd.Parameters.AddWithValue("@FantasyName", entity.FantasyName);
                 cmd.Parameters.AddWithValue("@CNPJ", entity.CNPJ);
                 cmd.Parameters.AddWithValue("@Email", entity.Email);
@@ -170,10 +173,10 @@ namespace FClient.Models
         ///</summary>
         public override void Update(Establishment entity)
         {
-            using (var conn = new SqlConnection(StringConnection))
+            using (var conn = new MySqlConnection(StringConnection))
             {
-                string sql = "UPDATE Establishment SET SocialName=@SocialName, FantasyName=@FantasyName, CNPJ=@CNPJ, Email=@Email, Address=@Address, City=@City, State=@State, Phone=@Phone, DateTime=@DateTime, Category=@Category, IsActive=@IsActive, Agency=@Agency, Account=@Account  Where Id=@Id";
-                SqlCommand cmd = new SqlCommand(sql, conn);
+                string sql = "UPDATE establishment SET SocialName=@SocialName, FantasyName=@FantasyName, CNPJ=@CNPJ, Email=@Email, Address=@Address, City=@City, State=@State, Phone=@Phone, DateTime=@DateTime, Category=@Category, IsActive=@IsActive, Agency=@Agency, Account=@Account  Where Id=@Id";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@SocialName", entity.SocialName);
                 cmd.Parameters.AddWithValue("@FantasyName", entity.FantasyName);
                 cmd.Parameters.AddWithValue("@CNPJ", entity.CNPJ);

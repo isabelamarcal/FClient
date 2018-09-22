@@ -44,3 +44,7 @@ C:\Users\Isabela\processo\FClient\FClient\FClient\bin\System.Web.Helpers.xml
 C:\Users\Isabela\processo\FClient\FClient\FClient\bin\System.Web.Mvc.xml
 C:\Users\Isabela\processo\FClient\FClient\FClient\obj\Debug\FClient.dll
 C:\Users\Isabela\processo\FClient\FClient\FClient\obj\Debug\FClient.pdb
+C:\Users\Isabela\processo\FClient\FClient\FClient\bin\Google.Protobuf.dll
+C:\Users\Isabela\processo\FClient\FClient\FClient\bin\MySql.Data.dll
+C:\Users\Isabela\processo\FClient\FClient\FClient\bin\Google.Protobuf.xml
+C:\Users\Isabela\processo\FClient\FClient\FClient\bin\MySql.Data.xml

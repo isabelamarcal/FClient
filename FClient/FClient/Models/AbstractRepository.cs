@@ -9,7 +9,7 @@ namespace FClient.Models
     public abstract class AbstractRepository<TEntity, TKey>
     where TEntity : class
     {
-        protected string StringConnection { get; } = WebConfigurationManager.ConnectionStrings["DatabaseFClient"].ConnectionString;
+        protected string StringConnection { get; } = "Server = localhost; Database=fclient;Uid=root;Pwd=root;persistsecurityinfo=True;SslMode=none";
 
         public abstract List<TEntity> GetAll();
         public abstract TEntity GetById(TKey id);
